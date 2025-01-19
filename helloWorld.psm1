@@ -5,10 +5,10 @@ function Invoke-HelloWorld {
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string]
-        $response = "Hello World!"
+        $reply = "Hello World!"
     )
     
-    Write-Output $response
+    Write-Output $reply
 }
 
 Export-ModuleMember -Function Invoke-HelloWorld
