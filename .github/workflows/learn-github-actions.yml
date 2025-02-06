@@ -1,25 +1,15 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions with NetAdapterNames
+name: learn-github-actions 
+run-name: ${{ github.actor }} is learning GitHub Actions with PowerShell on ubuntu
 on: [push]
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      # Step 1: Run the PowerShell Write-Host
+      # Step 1: Run the PowerShell Hello
       - uses: actions/checkout@v4
-      - name: Run the PowerShell Write-Host
+      - name: Run Continuous Integration
         shell: pwsh
         run: |
-          Write-Host "Hello from PowerShell on windows!"
+          Write-Host "Hello from PowerShell on ubuntu!"
           $date = Get-Date
           Write-Host "Current date and time is: $date"
-      # Step 2: Run the PowerShell Get-NetLbfoTeam and Invoke-Pester
-      - uses: actions/checkout@v4
-      - name: Run the PowerShell New-NetLbfoTeam and Get-NetLbfoTeam
-        shell: pwsh
-        run: |
-          # Get-NetLbfoTeam -ErrorAction SilentlyContinue
-          $NetAdapterNames = Get-NetAdapter | Where-Object MediaConnectionState -EQ Connected | % Name
-          $NetAdapterNames | out-string | Write-Host
-          New-NetLbfoTeam -Name "MyTeam" -TeamMembers $NetAdapterNames -ErrorAction SilentlyContinue
-          Get-NetLbfoTeam -Name "MyTeam" | out-string | Write-Host
