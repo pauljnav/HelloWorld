@@ -13,7 +13,7 @@ jobs:
           Write-Host "Hello from PowerShell on windows!"
           $date = Get-Date
           Write-Host "Current date and time is: $date"
-      # Step 2: Run the PowerShell Get-NetLbfoTeam
+      # Step 2: Run the PowerShell Get-NetLbfoTeam and Invoke-Pester
       - uses: actions/checkout@v4
       - name: Run the PowerShell Get-NetLbfoTeam
         shell: pwsh
@@ -21,3 +21,4 @@ jobs:
           Get-NetLbfoTeam -ErrorAction SilentlyContinue
           $date = Get-Date
           Write-Host "Current date and time is: $date"
+          Invoke-Pester .\Tests\helloWorld.Tests.ps1 -Output Detailed
