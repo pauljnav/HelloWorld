@@ -1,5 +1,5 @@
 name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: ${{ github.actor }} is learning GitHub Actions with NetAdapterNames
 on: [push]
 jobs:
   deploy:
@@ -20,5 +20,6 @@ jobs:
         run: |
           # Get-NetLbfoTeam -ErrorAction SilentlyContinue
           $NetAdapterNames = Get-NetAdapter | Where-Object MediaConnectionState -EQ Connected | % Name
-          New-NetLbfoTeam -Name "MyTeam" -TeamMembers $NetAdapterNames
-          Get-NetLbfoTeam -Name "MyTeam"
+          $NetAdapterNames | out-string | Write-Host
+          New-NetLbfoTeam -Name "MyTeam" -TeamMembers $NetAdapterNames -ErrorAction SilentlyContinue
+          Get-NetLbfoTeam -Name "MyTeam" | out-string | Write-Host
