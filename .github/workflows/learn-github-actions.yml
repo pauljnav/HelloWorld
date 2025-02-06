@@ -15,8 +15,10 @@ jobs:
           Write-Host "Current date and time is: $date"
       # Step 2: Run the PowerShell Get-NetLbfoTeam and Invoke-Pester
       - uses: actions/checkout@v4
-      - name: Run the PowerShell Get-NetLbfoTeam
+      - name: Run the PowerShell New-NetLbfoTeam and Get-NetLbfoTeam
         shell: pwsh
         run: |
           # Get-NetLbfoTeam -ErrorAction SilentlyContinue
-          Get-NetAdapter | Where-Object MediaConnectionState -EQ Connected | Select-Object Name
+          $NetAdapterNames = Get-NetAdapter | Where-Object MediaConnectionState -EQ Connected | % Name
+          New-NetLbfoTeam -Name "MyTeam" -TeamMembers $NetAdapterNames
+          Get-NetLbfoTeam -Name "MyTeam"
