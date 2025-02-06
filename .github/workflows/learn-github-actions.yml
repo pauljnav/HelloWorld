@@ -5,11 +5,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Run the PowerShell Hello
+      # Step 1: Run the PowerShell Write-Host
       - uses: actions/checkout@v4
-      - name: Run Continuous Integration
+      - name: Run the PowerShell Write-Host
         shell: pwsh
         run: |
           Write-Host "Hello from PowerShell on ubuntu!"
+          $date = Get-Date
+          Write-Host "Current date and time is: $date"
+      # Step 2: Run the PowerShell Get-NetLbfoTeam
+      - uses: actions/checkout@v4
+      - name: Run the PowerShell Get-NetLbfoTeam
+        shell: pwsh
+        run: |
+          Get-NetLbfoTeam -ErrorAction SilentlyContinue
           $date = Get-Date
           Write-Host "Current date and time is: $date"
