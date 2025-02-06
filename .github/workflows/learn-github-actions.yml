@@ -18,7 +18,5 @@ jobs:
       - name: Run the PowerShell Get-NetLbfoTeam
         shell: pwsh
         run: |
-          Get-NetLbfoTeam -ErrorAction SilentlyContinue
-          $date = Get-Date
-          Write-Host "Current date and time is: $date"
-          Invoke-Pester .\Tests\helloWorld.Tests.ps1 -Output Detailed
+          # Get-NetLbfoTeam -ErrorAction SilentlyContinue
+          Get-NetAdapter | Where-Object MediaConnectionState -EQ Connected | Select-Object Name
