@@ -3,14 +3,14 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on: [push]
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       # Step 1: Run the PowerShell Write-Host
       - uses: actions/checkout@v4
       - name: Run the PowerShell Write-Host
         shell: pwsh
         run: |
-          Write-Host "Hello from PowerShell on ubuntu!"
+          Write-Host "Hello from PowerShell on windows!"
           $date = Get-Date
           Write-Host "Current date and time is: $date"
       # Step 2: Run the PowerShell Get-NetLbfoTeam
