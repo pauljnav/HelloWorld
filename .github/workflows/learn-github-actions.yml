@@ -13,3 +13,4 @@ jobs:
           Write-Host "Hello from PowerShell on ubuntu!"
           $date = Get-Date
           Write-Host "Current date and time is: $date"
+          Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
