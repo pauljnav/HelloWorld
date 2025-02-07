@@ -16,7 +16,7 @@ jobs:
           Write-Output "try Get-VMSwitchTeam:"
           Get-VMSwitchTeam -ErrorAction SilentlyContinue
           Write-Output "Current date and time is: $(Get-Date)"
-      # job to continue processing even if there are test failures
-      if: ${{ always() }}
-# 📚 Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
-# 📚 $date = Get-Date
+        if: ${{ always() }}
+      # job to continue processing even if there are test failures ok
+# Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
+# $date = Get-Date
