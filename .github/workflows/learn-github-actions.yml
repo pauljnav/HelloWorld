@@ -1,22 +1,21 @@
-name: github-action-NICteam
-run-name: ${{ github.actor }} is learning GitHub Actions with PowerShell on ubuntu
+name: github-action-PowerShell
+run-name: ${{ github.actor }} is using GitHub Actions with PowerShell on ubuntu and windows
 on: [push]
 jobs:
-  deploy:
-    runs-on: windows-latest
+  Explore-GitHub-Actions:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
-      # Step 1: Run the PowerShell Hello
+      # Step 1: Run Continuous Integration
       - uses: actions/checkout@v4
       - name: Run Continuous Integration
         shell: pwsh
         run: |
-          Write-Host "Hello from PowerShell on ubuntu!"
-          Write-Output "try Get-NetLbfoTeam:"
-          Get-NetLbfoTeam -ErrorAction SilentlyContinue | Select-Object Status, TeamingMode
-          Write-Output "try Get-VMSwitchTeam:"
-          Get-VMSwitchTeam -ErrorAction SilentlyContinue
+          Write-Host "Hello from PowerShell on ${{ matrix.os }}!"
           Write-Output "Current date and time is: $(Get-Date)"
         if: ${{ always() }}
       # job to continue processing even if there are test failures ok
-# Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
-# $date = Get-Date
