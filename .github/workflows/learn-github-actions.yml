@@ -1,9 +1,9 @@
-name: learn-github-actions 
+name: github-action-NICteam
 run-name: ${{ github.actor }} is learning GitHub Actions with PowerShell on ubuntu
 on: [push]
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       # Step 1: Run the PowerShell Hello
       - uses: actions/checkout@v4
@@ -11,6 +11,10 @@ jobs:
         shell: pwsh
         run: |
           Write-Host "Hello from PowerShell on ubuntu!"
-          $date = Get-Date
-          Write-Host "Current date and time is: $date"
-          Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
+          Write-Output "try Get-NetLbfoTeam:"
+          Get-NetLbfoTeam | Select-Object Status, TeamingMode
+          Write-Output "try Get-VMSwitchTeam:"
+          Get-VMSwitchTeam
+          Write-Output "Current date and time is: $(Get-Date)"
+# Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
+# $date = Get-Date
