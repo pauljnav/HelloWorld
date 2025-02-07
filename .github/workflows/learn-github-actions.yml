@@ -5,7 +5,7 @@ jobs:
   deploy:
     runs-on: windows-latest
     steps:
-      # ℹ️ Step 1: Run the PowerShell Hello
+      # Step 1: Run the PowerShell Hello
       - uses: actions/checkout@v4
       - name: Run Continuous Integration
         shell: pwsh
