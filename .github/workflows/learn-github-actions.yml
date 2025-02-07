@@ -5,16 +5,18 @@ jobs:
   deploy:
     runs-on: windows-latest
     steps:
-      # Step 1: Run the PowerShell Hello
+      # ℹ️ Step 1: Run the PowerShell Hello
       - uses: actions/checkout@v4
       - name: Run Continuous Integration
         shell: pwsh
         run: |
           Write-Host "Hello from PowerShell on ubuntu!"
           Write-Output "try Get-NetLbfoTeam:"
-          Get-NetLbfoTeam | Select-Object Status, TeamingMode
+          Get-NetLbfoTeam -ErrorAction SilentlyContinue | Select-Object Status, TeamingMode
           Write-Output "try Get-VMSwitchTeam:"
-          Get-VMSwitchTeam
+          Get-VMSwitchTeam -ErrorAction SilentlyContinue
           Write-Output "Current date and time is: $(Get-Date)"
-# Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
-# $date = Get-Date
+      # job to continue processing even if there are test failures
+      if: ${{ always() }}
+# 📚 Invoke-Pester -Path .\Tests\helloWorld.Tests.ps1 -Output Detailed
+# 📚 $date = Get-Date
