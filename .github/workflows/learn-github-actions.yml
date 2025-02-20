@@ -17,5 +17,6 @@ jobs:
         run: |
           Write-Host "Hello from PowerShell on ${{ matrix.os }}!"
           Write-Output "Current date and time is: $(Get-Date)"
+          [System.Environment]::OSVersion.Platform
         if: ${{ always() }}
       # job to continue processing even if there are test failures ok
