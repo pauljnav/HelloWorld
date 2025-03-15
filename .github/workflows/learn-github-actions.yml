@@ -20,9 +20,9 @@ jobs:
           $host | select name,version
           [int]$upperBound = 10000
           $upperBound
-          Measure-Command { $items = @(); foreach ($i in 0..($upperBound)) { $items += $i } }
-          Measure-Command { $items = foreach ($i in 0..($upperBound)) { $i } }
-          Measure-Command { $items = [System.Collections.Generic.List[int]]::new(); foreach ($i in 0..($upperBound)) { $items.Add($i) } }
+          Measure-Command { $items = @(); foreach ($i in 0..($upperBound)) { $items += $i } } | Out-String
+          Measure-Command { $items = foreach ($i in 0..($upperBound)) { $i } } | Out-String
+          Measure-Command { $items = [System.Collections.Generic.List[int]]::new(); foreach ($i in 0..($upperBound)) { $items.Add($i) } } | Out-String
         # job to always continue processing even if there are test failures
         if: ${{ always() }}
         #[System.Environment]::OSVersion.Platform
