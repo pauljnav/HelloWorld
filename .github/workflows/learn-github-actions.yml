@@ -19,9 +19,9 @@ jobs:
           Write-Host "Hello from PowerShell on ${{ matrix.os }}!"
           $host | select name,version
           $upperBound = 10000
-          Measure-Command { $items = @(); foreach ($i in 0..$upperBound) { $items += $i } } | Select-Object TotalMilliseconds
-          Measure-Command { $items = foreach ($i in 0..$upperBound) { $i } } | Select-Object TotalMilliseconds
-          Measure-Command { $items = [System.Collections.Generic.List[int]]::new(); foreach ($i in 0..$upperBound) { $items.Add($i) } } | Select-Object TotalMilliseconds
+          Measure-Command { $items = @(); foreach ($i in 0..$upperBound) { $items += $i } }
+          Measure-Command { $items = foreach ($i in 0..$upperBound) { $i } }
+          Measure-Command { $items = [System.Collections.Generic.List[int]]::new(); foreach ($i in 0..$upperBound) { $items.Add($i) } }
         # job to always continue processing even if there are test failures
         if: ${{ always() }}
         #[System.Environment]::OSVersion.Platform
