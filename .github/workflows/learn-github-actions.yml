@@ -18,9 +18,8 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           brew update
-          brew install powershell/tap/powershell
+          brew upgrade powershell
           pwsh --version
-        #brew upgrade powershell
 
       # Windows step: Upgrade PowerShell using Chocolatey
       - name: Upgrade PowerShell on Windows
