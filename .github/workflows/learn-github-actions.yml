@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
         if: runner.os == 'Windows'
         run: |
-          choco upgrade powershell-core --version 7.5.0
+          choco upgrade powershell-core --version 7.5.0 -force
           pwsh --version
 
       # Step 2: Run tests
