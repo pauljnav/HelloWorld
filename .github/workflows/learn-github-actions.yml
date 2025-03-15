@@ -17,14 +17,16 @@ jobs:
       - name: Upgrade PowerShell on Ubuntu
         if: runner.os == 'Linux'
         run: |
-          brew update && brew upgrade powershell
+          brew update
+          brew install powershell/tap/powershell
           pwsh --version
+        #brew upgrade powershell
 
       # Windows step: Upgrade PowerShell using Chocolatey
       - name: Upgrade PowerShell on Windows
         if: runner.os == 'Windows'
         run: |
-          choco upgrade powershell --version=7.5.0 -y
+          choco upgrade powershell 
           pwsh --version
 
       # Step 2: Run tests
