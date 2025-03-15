@@ -1,8 +1,9 @@
 name: github-action-PowerShell
-run-name: ${{ github.actor }} is using GitHub Actions with PowerShell on ubuntu and windows
+run-name: ${{ github.actor }} is using GitHub Actions for PowerShell Measure-Command tests on ubuntu and windows
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  # job name
+  Explore-System-Environment:
     strategy:
       matrix:
         os:
@@ -16,7 +17,19 @@ jobs:
         shell: pwsh
         run: |
           Write-Host "Hello from PowerShell on ${{ matrix.os }}!"
-          Write-Output "Current date and time is: $(Get-Date)"
-          [System.Environment]::OSVersion.Platform
+          $host | select name,version
+          $upperBound = 10000
+          Measure-Command {
+            $items = @()
+            foreach ($i in 0..$upperBound) { $items += $i }
+          } | Select-Object TotalMilliseconds
+          Measure-Command {
+            $items = foreach ($i in 0..$upperBound) { $i }
+          } | Select-Object TotalMilliseconds
+          Measure-Command {
+            $items = [System.Collections.Generic.List[int]]::new()
+            foreach ($i in 0..$upperBound) { $items.Add($i) }
+          } | Select-Object TotalMilliseconds
+        # job to always continue processing even if there are test failures
         if: ${{ always() }}
-      # job to continue processing even if there are test failures ok
+        #[System.Environment]::OSVersion.Platform
