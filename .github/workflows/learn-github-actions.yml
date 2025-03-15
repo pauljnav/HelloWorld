@@ -10,11 +10,15 @@ jobs:
           - ubuntu-latest
           - windows-latest
     runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v4
+      - name: Check OS
+        run: echo "Running on ${{ runner.os }}"
 
       # Ubuntu step: Upgrade PowerShell using Homebrew
       - name: Upgrade PowerShell on Ubuntu
+        continue-on-error: true
         if: runner.os == 'Linux'
         run: |
           brew update
@@ -23,6 +27,7 @@ jobs:
 
       # Windows step: Upgrade PowerShell using Chocolatey
       - name: Upgrade PowerShell on Windows
+        continue-on-error: true
         if: runner.os == 'Windows'
         run: |
           choco upgrade powershell 
@@ -30,15 +35,14 @@ jobs:
 
       # Step 2: Run tests
       - name: Run Measure-Command testing
+        continue-on-error: true
         shell: pwsh
         run: |
           Write-Host "Hello from PowerShell on ${{ matrix.os }}!"
           $host | select name,version
           [int]$upperBound = 10000
-          $upperBound
           Measure-Command { $items = @(); foreach ($i in 0..($upperBound)) { $items += $i } } | Select-Object TotalMilliseconds | Out-String
           Measure-Command { $items = foreach ($i in 0..($upperBound)) { $i } } | Select-Object TotalMilliseconds | Out-String
           Measure-Command { $items = [System.Collections.Generic.List[int]]::new(); foreach ($i in 0..($upperBound)) { $items.Add($i) } } | Select-Object TotalMilliseconds | Out-String
         # job to always continue processing even if there are test failures
-        if: ${{ always() }}
         #[System.Environment]::OSVersion.Platform
