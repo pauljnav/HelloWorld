@@ -26,8 +26,9 @@ jobs:
         continue-on-error: true
         if: runner.os == 'Linux'
         run: |
-          cat /etc/system-release
+          cat /etc/os-release
           brew update
+          brew --version
           brew upgrade powershell
           pwsh --version
 
@@ -36,7 +37,7 @@ jobs:
         continue-on-error: true
         if: runner.os == 'Windows'
         run: |
-          choco upgrade powershell 
+          choco upgrade powershell --version 7.5
           pwsh --version
 
       # Step 2: Run tests
