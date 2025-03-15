@@ -1,5 +1,5 @@
 name: github-action-PowerShell
-run-name: ${{ github.actor }} is using GitHub Actions for PowerShell Measure-Command tests on ubuntu and windows
+run-name: ${{ github.actor }} GitHub Actions PowerShell Measure-Command on ubuntu and windows
 on: [push]
 jobs:
   # job name
@@ -15,12 +15,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check OS
         run: echo "Running on ${{ runner.os }}"
-
+      
       # Ubuntu step: Upgrade PowerShell using Homebrew
+      - name: Setup Homebrew on Ubuntu
+        continue-on-error: true
+        uses: Homebrew/actions/setup-homebrew@master
+        if: runner.os == 'Linux'
+
       - name: Upgrade PowerShell on Ubuntu
         continue-on-error: true
         if: runner.os == 'Linux'
         run: |
+          cat /etc/system-release
           brew update
           brew upgrade powershell
           pwsh --version
