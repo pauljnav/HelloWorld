@@ -11,18 +11,33 @@ jobs:
           - windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      # Step 1: Run Continuous Integration
       - uses: actions/checkout@v4
-      - name: Run Continuous Integration
+
+      # Ubuntu step: Upgrade PowerShell using Homebrew
+      - name: Upgrade PowerShell on Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+          brew update && brew upgrade powershell
+          pwsh --version
+
+      # Windows step: Upgrade PowerShell using Chocolatey
+      - name: Upgrade PowerShell on Windows
+        if: runner.os == 'Windows'
+        run: |
+          choco upgrade powershell --version=7.5.0 -y
+          pwsh --version
+
+      # Step 2: Run tests
+      - name: Run Measure-Command testing
         shell: pwsh
         run: |
           Write-Host "Hello from PowerShell on ${{ matrix.os }}!"
           $host | select name,version
           [int]$upperBound = 10000
           $upperBound
-          Measure-Command { $items = @(); foreach ($i in 0..($upperBound)) { $items += $i } } | Out-String
-          Measure-Command { $items = foreach ($i in 0..($upperBound)) { $i } } | Out-String
-          Measure-Command { $items = [System.Collections.Generic.List[int]]::new(); foreach ($i in 0..($upperBound)) { $items.Add($i) } } | Out-String
+          Measure-Command { $items = @(); foreach ($i in 0..($upperBound)) { $items += $i } } | Select-Object TotalMilliseconds | Out-String
+          Measure-Command { $items = foreach ($i in 0..($upperBound)) { $i } } | Select-Object TotalMilliseconds | Out-String
+          Measure-Command { $items = [System.Collections.Generic.List[int]]::new(); foreach ($i in 0..($upperBound)) { $items.Add($i) } } | Select-Object TotalMilliseconds | Out-String
         # job to always continue processing even if there are test failures
         if: ${{ always() }}
         #[System.Environment]::OSVersion.Platform
